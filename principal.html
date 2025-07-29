@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parede Colonizada</title>
+    <title>A Revelação da Arte</title>
     <style>
         /* --- Configurações Gerais --- */
         body, html {
@@ -150,7 +150,7 @@
         const MAX_INCLINACAO = 10;
         
         // Ajustado para manter a suavidade e o enquadramento
-        const FATOR_MOVIMENTO_SUPERIOR = 500; 
+        const FATOR_MOVIMENTO_SUPERIOR = 650; 
         const ZOOM_SUPERIOR = 2;
 
         let quedaOcorreu = false;
@@ -183,7 +183,7 @@
 
             zoomTimeout = setTimeout(() => {
                 containerSuperior.style.transform = `perspective(1000px) translateX(0px) translateY(0px) rotateZ(${inclinacao}deg) scale(1)`;
-            }, 100);
+            }, 600);
 
             if (pontuacaoInteracao > PONTOS_PARA_CLICAR) {
                 fitaAdesiva.classList.add('clicavel');
@@ -201,7 +201,7 @@
             containerSuperior.style.transform = `${transformAtual} translateY(150vh) rotateZ(45deg)`;
             cursor.classList.remove('interativo');
 
-            setTimeout(ativarInteracaoInferior, 150);
+            setTimeout(ativarInteracaoInferior, 600);
         });
 
         // Handler de mouse principal para poder ser removido depois
