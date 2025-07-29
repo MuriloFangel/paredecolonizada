@@ -1,252 +1,224 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AParede Colonizada</title>
-    <style>
-        /* --- Configurações Gerais --- */
-        body, html {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background-color: #1a1a1a;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            cursor: none;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        /* --- Container Principal --- */
-        .main-container {
-            position: relative;
-            width: 80vw;
-            height: 80vh;
-            max-width: 600px;
-            max-height: 750px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* --- Camada Inferior (Arte Indígena) --- */
-        .arte-inferior-container {
-            position: absolute;
-            width: 90%;
-            height: 90%;
-            box-shadow: 0 0 50px 20px rgba(255, 255, 180, 0);
-            /* Transição para a distorção final */
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 1s ease-out;
-            will-change: transform, box-shadow;
-        }
-        .arte-inferior-container.revelada {
-            box-shadow: 0 0 50px 0 rgba(0,0,0,0.5);
-        }
-        
-        .arte-inferior {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            opacity: 0;
-            transition: opacity 1.5s 0.2s ease-out;
-        }
-        .arte-inferior.visivel { opacity: 1; }
-
-        /* --- Camada Superior (Arte Colonialista) --- */
-        .arte-superior-container {
-            position: absolute;
-            width: 90%;
-            height: 90%;
-            padding: 25px 25px 50px 25px;
-            background: #f1f1f1;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.5);
-            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            will-change: transform;
-        }
-        .arte-superior-container.caindo {
-            transition: transform 1.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
-            opacity: 0;
-        }
-        
-        .arte-superior {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            pointer-events: none;
-            -webkit-user-drag: none;
-        }
-        
-        /* --- Fita Adesiva --- */
-        .fita-adesiva {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 40px;
-            background-color: rgba(255, 226, 158, 0.7);
-            border-left: 2px dashed rgba(0,0,0,0.1);
-            border-right: 2px dashed rgba(0,0,0,0.1);
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .fita-adesiva.clicavel:hover {
-            cursor: pointer;
-            background-color: rgba(255, 200, 100, 1);
-            transform: translateX(-50%) scale(1.05);
-        }
-        
-        /* --- Cursor customizado --- */
-        #cursor-customizado {
-            position: fixed;
-            width: 25px;
-            height: 25px;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: all 0.2s ease-out;
-            z-index: 9999;
-        }
-        #cursor-customizado.interativo {
-            background-color: rgba(255, 200, 100, 0.5);
-            border-color: #ffc864;
-            transform: translate(-50%, -50%) scale(1.4);
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parede Colonizada</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a1a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .main-container {
+      position: relative;
+      width: 80vw;
+      height: 80vh;
+      max-width: 600px;
+      max-height: 750px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .arte-inferior-container {
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      box-shadow: 0 0 50px 20px rgba(255, 255, 180, 0);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 1s ease-out;
+      will-change: transform, box-shadow;
+    }
+    .arte-inferior-container.revelada {
+      box-shadow: 0 0 50px 0 rgba(0,0,0,0.5);
+    }
+    .arte-inferior {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity 1.5s 0.2s ease-out;
+    }
+    .arte-inferior.visivel {
+      opacity: 1;
+    }
+    .arte-superior-container {
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      padding: 25px 25px 50px 25px;
+      background: #f1f1f1;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.5);
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      will-change: transform;
+    }
+    .arte-superior-container.caindo {
+      transition: transform 1.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      opacity: 0;
+    }
+    .arte-superior {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      -webkit-user-drag: none;
+    }
+    .fita-adesiva {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 40px;
+      background-color: rgba(255, 226, 158, 0.7);
+      border-left: 2px dashed rgba(0,0,0,0.1);
+      border-right: 2px dashed rgba(0,0,0,0.1);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .fita-adesiva.clicavel:hover {
+      cursor: pointer;
+      background-color: rgba(255, 200, 100, 1);
+      transform: translateX(-50%) scale(1.05);
+    }
+    #cursor-customizado {
+      position: fixed;
+      width: 25px;
+      height: 25px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: all 0.2s ease-out;
+      z-index: 9999;
+    }
+    #cursor-customizado.interativo {
+      background-color: rgba(255, 200, 100, 0.5);
+      border-color: #ffc864;
+      transform: translate(-50%, -50%) scale(1.4);
+    }
+  </style>
 </head>
 <body>
-    <div id="cursor-customizado"></div>
-
-    <div class="main-container" id="main-container">
-        <!-- CAMADA INFERIOR (arte.png) -->
-        <div class="arte-inferior-container" id="container-inferior">
-            <img src="arte.png" alt="Arte Anticolonial" class="arte-inferior" id="arte-inferior" />
-        </div>
-
-        <!-- CAMADA SUPERIOR (colon.png) -->
-        <div class="arte-superior-container" id="container-superior">
-            <img src="colon.png" alt="Arte Colonialista" class="arte-superior" />
-            <div class="fita-adesiva" id="fita-adesiva"></div>
-        </div>
+  <div id="cursor-customizado"></div>
+  <div class="main-container" id="main-container">
+    <div class="arte-inferior-container" id="container-inferior">
+      <img src="arte.png" alt="Arte Anticolonial" class="arte-inferior" id="arte-inferior" />
     </div>
-    
-    <script>
+    <div class="arte-superior-container" id="container-superior">
+      <img src="colon.png" alt="Arte Colonialista" class="arte-superior" />
+      <div class="fita-adesiva" id="fita-adesiva"></div>
+    </div>
+  </div>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const mainContainer = document.getElementById('main-container');
-        const containerSuperior = document.getElementById('container-superior');
-        const containerInferior = document.getElementById('container-inferior');
-        const arteInferior = document.getElementById('arte-inferior');
-        const fitaAdesiva = document.getElementById('fita-adesiva');
-        const cursor = document.getElementById('cursor-customizado');
+      const mainContainer = document.getElementById('main-container');
+      const containerSuperior = document.getElementById('container-superior');
+      const containerInferior = document.getElementById('container-inferior');
+      const arteInferior = document.getElementById('arte-inferior');
+      const fitaAdesiva = document.getElementById('fita-adesiva');
+      const cursor = document.getElementById('cursor-customizado');
 
-        let pontuacaoInteracao = 0;
-        // Variáveis ajustadas por você
-        const PONTOS_PARA_CLICAR = 300;
-        const MAX_INCLINACAO = 10;
-        
-        // Ajustado para manter a suavidade e o enquadramento
-        const FATOR_MOVIMENTO_SUPERIOR = 650; 
-        const ZOOM_SUPERIOR = 2;
+      let pontuacaoInteracao = 0;
+      const PONTOS_PARA_CLICAR = 300;
+      const MAX_INCLINACAO = 10;
+      const FATOR_MOVIMENTO_SUPERIOR = 650;
+      const ZOOM_SUPERIOR = 2;
+      let quedaOcorreu = false;
+      let zoomTimeout;
 
-        let quedaOcorreu = false;
-        let zoomTimeout;
-        
-        mainContainer.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-            
-            if (quedaOcorreu) return;
-
-            pontuacaoInteracao++;
-            clearTimeout(zoomTimeout);
-
-            const rect = mainContainer.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-            const xRel = (mouseX / rect.width) - 0.5;
-            const yRel = (mouseY / rect.height) - 0.5;
-
-            const moveX = -xRel * FATOR_MOVIMENTO_SUPERIOR;
-            const moveY = -yRel * FATOR_MOVIMENTO_SUPERIOR;
-            
-            const inclinacao = Math.min((pontuacaoInteracao / PONTOS_PARA_CLICAR) * MAX_INCLINACAO, MAX_INCLINACAO);
-            
-            containerSuperior.style.transform = `perspective(1000px) translateX(${moveX}px) translateY(${moveY}px) rotateZ(${inclinacao}deg) scale(${ZOOM_SUPERIOR})`;
-
-            const brilhoAlpha = Math.min(pontuacaoInteracao / PONTOS_PARA_CLICAR, 1) * 0.8;
-            containerInferior.style.boxShadow = `0 0 50px 20px rgba(255, 255, 180, ${brilhoAlpha})`;
-
-            zoomTimeout = setTimeout(() => {
-                containerSuperior.style.transform = `perspective(1000px) translateX(0px) translateY(0px) rotateZ(${inclinacao}deg) scale(1)`;
-            }, 600);
-
-            if (pontuacaoInteracao > PONTOS_PARA_CLICAR) {
-                fitaAdesiva.classList.add('clicavel');
-            }
-        });
-        
-        fitaAdesiva.addEventListener('click', () => {
-            if (!fitaAdesiva.classList.contains('clicavel') || quedaOcorreu) return;
-            
-            quedaOcorreu = true;
-            mainContainer.removeEventListener('mousemove', mainMouseMoveHandler); // Remove o listener principal
-            
-            const transformAtual = containerSuperior.style.transform;
-            containerSuperior.classList.add('caindo');
-            containerSuperior.style.transform = `${transformAtual} translateY(150vh) rotateZ(45deg)`;
-            cursor.classList.remove('interativo');
-
-            setTimeout(ativarInteracaoInferior, 20);
-        });
-
-        // Handler de mouse principal para poder ser removido depois
-        const mainMouseMoveHandler = (e) => {
-             // Esta função está aqui em cima apenas para ser referenciada e removida
-        };
-        mainContainer.addEventListener('mousemove', mainMouseMoveHandler);
-
-        function ativarInteracaoInferior() {
-            containerInferior.classList.add('revelada');
-            arteInferior.classList.add('visivel');
-            
-            const FATOR_DISTORCAO_FINAL = 20; // Distorção aumentada como pedido
-
-            // Adiciona a nova lógica de DISTORÇÃO (sem zoom) para a imagem revelada
-            mainContainer.addEventListener('mousemove', (e) => {
-                if (!quedaOcorreu) return;
-                
-                const rect = mainContainer.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const xRel = (x / rect.width) - 0.5;
-                const yRel = (y / rect.height) - 0.5;
-
-                const rotX = yRel * FATOR_DISTORCAO_FINAL;
-                const rotY = -xRel * FATOR_DISTORCAO_FINAL;
-
-                // Aplica apenas o efeito de perspectiva (distorção), sem scale
-                containerInferior.style.transform = `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1)`;
-            });
-
-             mainContainer.addEventListener('mouseleave', () => {
-                // Reseta a distorção se o mouse sair da área
-                containerInferior.style.transform = `perspective(1200px) scale(1)`;
-            });
+      function aplicarInteracao(x, y) {
+        if (quedaOcorreu) return;
+        pontuacaoInteracao++;
+        clearTimeout(zoomTimeout);
+        const rect = mainContainer.getBoundingClientRect();
+        const mouseX = x - rect.left;
+        const mouseY = y - rect.top;
+        const xRel = (mouseX / rect.width) - 0.5;
+        const yRel = (mouseY / rect.height) - 0.5;
+        const moveX = -xRel * FATOR_MOVIMENTO_SUPERIOR;
+        const moveY = -yRel * FATOR_MOVIMENTO_SUPERIOR;
+        const inclinacao = Math.min((pontuacaoInteracao / PONTOS_PARA_CLICAR) * MAX_INCLINACAO, MAX_INCLINACAO);
+        containerSuperior.style.transform = `perspective(1000px) translateX(${moveX}px) translateY(${moveY}px) rotateZ(${inclinacao}deg) scale(${ZOOM_SUPERIOR})`;
+        const brilhoAlpha = Math.min(pontuacaoInteracao / PONTOS_PARA_CLICAR, 1) * 0.8;
+        containerInferior.style.boxShadow = `0 0 50px 20px rgba(255, 255, 180, ${brilhoAlpha})`;
+        zoomTimeout = setTimeout(() => {
+          containerSuperior.style.transform = `perspective(1000px) translateX(0px) translateY(0px) rotateZ(${inclinacao}deg) scale(1)`;
+        }, 600);
+        if (pontuacaoInteracao > PONTOS_PARA_CLICAR) {
+          fitaAdesiva.classList.add('clicavel');
         }
-        
-        fitaAdesiva.addEventListener('mouseenter', () => {
-            if (fitaAdesiva.classList.contains('clicavel')) {
-                cursor.classList.add('interativo');
-            }
+      }
+
+      function ativarInteracaoInferior() {
+        containerInferior.classList.add('revelada');
+        arteInferior.classList.add('visivel');
+        const FATOR_DISTORCAO_FINAL = 20;
+        function aplicarDistorcao(x, y) {
+          if (!quedaOcorreu) return;
+          const rect = mainContainer.getBoundingClientRect();
+          const xRel = (x - rect.left) / rect.width - 0.5;
+          const yRel = (y - rect.top) / rect.height - 0.5;
+          const rotX = yRel * FATOR_DISTORCAO_FINAL;
+          const rotY = -xRel * FATOR_DISTORCAO_FINAL;
+          containerInferior.style.transform = `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1)`;
+        }
+        mainContainer.addEventListener('mousemove', e => aplicarDistorcao(e.clientX, e.clientY));
+        mainContainer.addEventListener('touchmove', e => {
+          if (e.touches.length === 1) {
+            aplicarDistorcao(e.touches[0].clientX, e.touches[0].clientY);
+            e.preventDefault();
+          }
+        }, { passive: false });
+        mainContainer.addEventListener('mouseleave', () => {
+          containerInferior.style.transform = `perspective(1200px) scale(1)`;
         });
-        fitaAdesiva.addEventListener('mouseleave', () => cursor.classList.remove('interativo'));
+      }
+
+      fitaAdesiva.addEventListener('click', () => {
+        if (!fitaAdesiva.classList.contains('clicavel') || quedaOcorreu) return;
+        quedaOcorreu = true;
+        containerSuperior.classList.add('caindo');
+        const transformAtual = containerSuperior.style.transform;
+        containerSuperior.style.transform = `${transformAtual} translateY(150vh) rotateZ(45deg)`;
+        cursor.classList.remove('interativo');
+        setTimeout(ativarInteracaoInferior, 20);
+      });
+
+      mainContainer.addEventListener('mousemove', e => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+        aplicarInteracao(e.clientX, e.clientY);
+      });
+
+      mainContainer.addEventListener('touchstart', e => {
+        if (e.touches.length === 1) {
+          aplicarInteracao(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      });
+
+      mainContainer.addEventListener('touchmove', e => {
+        if (e.touches.length === 1) {
+          aplicarInteracao(e.touches[0].clientX, e.touches[0].clientY);
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      fitaAdesiva.addEventListener('mouseenter', () => {
+        if (fitaAdesiva.classList.contains('clicavel')) {
+          cursor.classList.add('interativo');
+        }
+      });
+
+      fitaAdesiva.addEventListener('mouseleave', () => cursor.classList.remove('interativo'));
     });
-    </script>
+  </script>
 </body>
 </html>
